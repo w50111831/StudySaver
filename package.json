@@ -1,7 +1,7 @@
 {
   "name": "studysaver",
   "version": "1.0.0",
-  "description": "A study plan generator to help students",
+  "description": "A study plan generator to help students plan and track study time.",
   "homepage": "https://github.com/w50111831/StudySaver#readme",
   "bugs": {
     "url": "https://github.com/w50111831/StudySaver/issues"
@@ -12,10 +12,10 @@
   },
   "license": "ISC",
   "author": "",
-  "type": "commonjs",
-  "main": "./server.js",
+  "type": "module",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch backend/server.ts"
   },
   "dependencies": {
     "@fastify/cors": "^11.3.0",

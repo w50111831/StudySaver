@@ -1,31 +1,22 @@
-// server.cjs
-const fs = require('node:fs')
-const express = require('express')
-const app = express()
-const port = 3000
+import Fastify from "fastify";
+import cors from "@fastify/cors";
 
-app.get("/", (req, res) => {
-  res.writeHead(200, { "Content-Type": "text/html" });
-  fs.readFile("./frontend/index.html", "utf8", (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    res.end(data);
-  });
+const app = Fastify({
+  logger: true,
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+await app.register(cors, {
+  origin: "http://localhost:5173",
 });
 
-/*
-res.writeHead(200, { "Content-Type": "text/html" });
-fs.readFile("./frontend/index.html", "utf8", (err, data) => {
-  if (err) {
-    console.error(err);
-    return;
+app.get("/api/hello", async() => {
+  return {
+    status: "works!",
+    message: "HELLO WORLD",
   }
-  res.end(data);
+})
+
+app.listen({
+  port: 3000,
+  host: "0.0.0.0",
 });
-*/
