@@ -1,5 +1,8 @@
+import "dotenv/config";
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import { connectToDatabase, getDb} from "./db.js"
+
 
 const app = Fastify({
   logger: true,
@@ -9,32 +12,13 @@ await app.register(cors, {
   origin: "http://localhost:5173",
 });
 
-//Auth routes
-
-app.post("/api/auth/sign-up", async() => {
-  return {
-    dummy: "sign-up route works",
-  }
-})
-
-app.post("/api/auth/sign-in", async() => {
-  return {
-    dummy: "sign-in route works",
-  }
-})
-
-app.post("/api/auth/sign-out", async() => {
-  return {
-    dummy: "sign-out route works",
-  }
-})
 
 app.get("/api/hello", async() => {
   return {
     status: "works!",
     message: "HELLO WORLD",
   }
-})
+});
 
 app.get("/api/study-plans", async () => {
   return {
@@ -51,7 +35,21 @@ app.get("/api/study-plans", async () => {
       }
     ]
   }
-})
+});
+
+app.get("/api/test-db", async () => {
+  const db = getDb();
+
+  const result = await db.command({
+    ping: 1,
+  })
+  return {
+    database: "connected",
+    result,
+  };
+});
+
+await connectToDatabase();
 
 app.listen({
   port: 3000,
